@@ -53,3 +53,6 @@ nb-configuration.xml
 release.properties
 pom.xml.releaseBackup
 pom.xml.tag
+out/artifacts/PosTagger_jar/PosTagger.jar
+out/production/PosTagger/libs/Corpus.jar
+out/production/PosTagger/libs/Hmm.jar
