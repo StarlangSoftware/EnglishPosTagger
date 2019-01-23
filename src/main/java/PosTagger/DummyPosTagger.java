@@ -9,17 +9,9 @@ public class DummyPosTagger implements PosTagger{
     private String[] tagList;
 
     public void train(PosTaggedCorpus corpus) {
-        Set tagList;
-        tagList = new HashSet();
-        for (int i = 0; i < corpus.sentenceCount(); i++){
-             Sentence s = corpus.getSentence(i);
-            for (int j = 0; j < s.wordCount(); j++){
-                PosTaggedWord word = (PosTaggedWord) corpus.getSentence(i).getWord(j);
-                tagList.add(word.getTag());
-            }
-        }
-        this.tagList = new String[tagList.size()];
-        this.tagList = (String[]) tagList.toArray(this.tagList);
+        Set<String> corpusTagList = corpus.getTagList();
+        tagList = new String[corpusTagList.size()];
+        tagList = (String[]) corpusTagList.toArray(tagList);
     }
 
     public Sentence posTag(Sentence sentence) {

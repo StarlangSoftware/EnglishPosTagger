@@ -39,8 +39,8 @@ public class TestPosTag {
     }
 
     public static void main(String[] args){
-        //PosTagger tagger = new DummyPosTagger();
-        PosTagger tagger = new NaivePosTagger();
+        PosTagger tagger = new DummyPosTagger();
+        //PosTagger tagger = new NaivePosTagger();
         //PosTagger tagger = new HmmPosTagger();
         testTagger(tagger);
     }
