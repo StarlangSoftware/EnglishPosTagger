@@ -22,7 +22,7 @@ public class TestPosTag {
     }
 
     private static void testTagger(PosTagger posTagger){
-        PosTaggedCorpus posTaggedCorpus = new PosTaggedCorpus("Data/PosTagging/brown.txt");
+        PosTaggedCorpus posTaggedCorpus = new PosTaggedCorpus("brown.txt");
         posTagger.train(posTaggedCorpus);
         int correct = 0, incorrect = 0;
         for (int i = 0; i < posTaggedCorpus.sentenceCount(); i++){
