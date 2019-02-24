@@ -25,7 +25,7 @@ public class PosTaggedCorpus extends Corpus{
     }
 
     public PosTaggedCorpus(String fileName){
-        String line, name, tag;
+        String line, name, tag, shortTag;
         Sentence newSentence = new Sentence();
         sentences = new ArrayList<Sentence>();
         tagList = new CounterHashMap<>();
@@ -40,8 +40,17 @@ public class PosTaggedCorpus extends Corpus{
                         if (word.contains("/")){
                             name = word.substring(0, word.lastIndexOf('/'));
                             tag = word.substring(word.lastIndexOf('/') + 1);
-                            tagList.put(tag);
-                            newSentence.addWord(new PosTaggedWord(name, tag));
+                            if (tag.contains("+")){
+                                shortTag = tag.substring(0, tag.indexOf("+"));
+                            } else {
+                                if (tag.contains("-")){
+                                    shortTag = tag.substring(0, tag.indexOf("-"));
+                                } else {
+                                    shortTag = tag;
+                                }
+                            }
+                            tagList.put(shortTag);
+                            newSentence.addWord(new PosTaggedWord(name, shortTag));
                             if (tag.equalsIgnoreCase(".")){
                                 addSentence(newSentence);
                                 newSentence = new Sentence();
