@@ -85,8 +85,8 @@ PosTagger
 ### Maven Usage
 
     <groupId>NlpToolkit</groupId>
-    <artifactId>WordNet</artifactId>
-    <version>1.0.11</version>
+    <artifactId>PosTagger</artifactId>
+    <version>1.0.0</version>
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -100,17 +100,22 @@ PosTagger
     <dependencies>
         <dependency>
             <groupId>NlpToolkit</groupId>
+            <artifactId>Corpus</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>NlpToolkit</groupId>
             <artifactId>DataStructure</artifactId>
             <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>NlpToolkit</groupId>
             <artifactId>Dictionary</artifactId>
-            <version>1.0.2</version>
+            <version>1.0.1</version>
         </dependency>
         <dependency>
             <groupId>NlpToolkit</groupId>
-            <artifactId>MorphologicalAnalysis</artifactId>
-            <version>1.0.2</version>
+            <artifactId>Hmm</artifactId>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
