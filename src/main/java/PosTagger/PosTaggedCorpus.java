@@ -14,16 +14,31 @@ public class PosTaggedCorpus extends Corpus{
 
     private CounterHashMap<String> tagList;
 
+    /**
+     * A constructor of {@link PosTaggedCorpus} which initializes the sentences of the corpus, the word list of
+     * the corpus, and all possible tags.
+     */
     public PosTaggedCorpus(){
         sentences = new ArrayList<Sentence>();
         wordList = new CounterHashMap<>();
         tagList = new CounterHashMap<>();
     }
 
+    /**
+     * A clone method for the {@link PosTaggedCorpus} class.
+     *
+     * @return A copy of the current {@link PosTaggedCorpus} class.
+     */
     public PosTaggedCorpus emptyCopy(){
         return new PosTaggedCorpus();
     }
 
+    /**
+     * Another constructor of {@link PosTaggedCorpus} which takes a fileName of the corpus as an input, reads the
+     * corpus from that file.
+     *
+     * @param fileName Name of the corpus file.
+     */
     public PosTaggedCorpus(String fileName){
         String line, name, tag, shortTag;
         Sentence newSentence = new Sentence();
@@ -72,6 +87,11 @@ public class PosTaggedCorpus extends Corpus{
         }
     }
 
+    /**
+     * getTagList returns all possible tags as a set.
+     *
+     * @return Set of all possible tags.
+     */
     public Set<String> getTagList(){
         return tagList.keySet();
     }

@@ -8,12 +8,24 @@ import java.util.*;
 public class DummyPosTagger implements PosTagger{
     private String[] tagList;
 
+    /**
+     * Train method for the Dummy pos tagger. The algorithm gets all possible tag list.
+     *
+     * @param corpus Traning data for the tagger.
+     */
     public void train(PosTaggedCorpus corpus) {
         Set<String> corpusTagList = corpus.getTagList();
         tagList = new String[corpusTagList.size()];
         tagList = (String[]) corpusTagList.toArray(tagList);
     }
 
+    /**
+     * Test method for the Dummy pos tagger. For each word, the method chooses randomly a tag from all possible
+     * tag list.
+     *
+     * @param sentence Sentence to be tagged.
+     * @return Annotated (tagged) sentence.
+     */
     public Sentence posTag(Sentence sentence) {
         Random random = new Random();
         Sentence result = new Sentence();
@@ -23,6 +35,9 @@ public class DummyPosTagger implements PosTagger{
         return result;
     }
 
+    /**
+     * The method saves the pos tagger model.
+     */
     public void saveModel() {
         FileOutputStream outFile;
         ObjectOutputStream outObject;
@@ -35,6 +50,9 @@ public class DummyPosTagger implements PosTagger{
         }
     }
 
+    /**
+     * The method loads the pos tagger model.
+     */
     public void loadModel() {
         FileInputStream inFile;
         ObjectInputStream inObject;

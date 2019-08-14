@@ -8,11 +8,21 @@ public class PosTaggedWord extends Word implements Serializable{
 
     private String tag;
 
+    /**
+     * A constructor of {@link PosTaggedWord} which takes name and tag as input and sets the corresponding attributes
+     * @param name Name of the word
+     * @param tag Tag of the word
+     */
     public PosTaggedWord(String name, String tag){
-        this.name = name;
+        super(name);
         this.tag = tag;
     }
 
+    /**
+     * Accessor method for tag attribute.
+     *
+     * @return Tag of the word.
+     */
     public String getTag(){
         return tag;
     }

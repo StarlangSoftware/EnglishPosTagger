@@ -9,6 +9,12 @@ import java.util.HashMap;
 public class NaivePosTagger implements PosTagger{
     private HashMap<String, String> maxMap;
 
+    /**
+     * Train method for the Naive pos tagger. The algorithm gets all possible tag list. Then counts all
+     * possible tags (with its counts) for each possible word.
+     *
+     * @param corpus Traning data for the tagger.
+     */
     public void train(PosTaggedCorpus corpus) {
         HashMap<String, CounterHashMap<String>> map = new HashMap<>();
         for (int i = 0; i < corpus.sentenceCount(); i++){
@@ -30,6 +36,13 @@ public class NaivePosTagger implements PosTagger{
         }
     }
 
+    /**
+     * Test method for the Naive pos tagger. For each word, the method chooses the maximum a posterior tag from all
+     * possible tag list for that word.
+     *
+     * @param sentence Sentence to be tagged.
+     * @return Annotated (tagged) sentence.
+     */
     public Sentence posTag(Sentence sentence) {
         Sentence result = new Sentence();
         for (int i = 0; i < sentence.wordCount(); i++){
@@ -38,6 +51,9 @@ public class NaivePosTagger implements PosTagger{
         return result;
     }
 
+    /**
+     * The method saves the pos tagger model.
+     */
     public void saveModel() {
         FileOutputStream outFile;
         ObjectOutputStream outObject;
@@ -50,6 +66,9 @@ public class NaivePosTagger implements PosTagger{
         }
     }
 
+    /**
+     * The method loads the pos tagger model.
+     */
     public void loadModel() {
         FileInputStream inFile;
         ObjectInputStream inObject;
