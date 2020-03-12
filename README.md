@@ -1,4 +1,7 @@
 # PosTagger
+
+This is a tool meant for tagging words with their part-of-speech, a grammatical category based on their function within a sentence, such as noun, adjective, verb, and so forth. 
+
 For Developers
 ============
 You can also see either [Python](https://github.com/olcaytaner/EnglishPosTagger-Py) 
