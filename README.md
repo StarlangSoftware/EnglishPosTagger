@@ -77,19 +77,49 @@ Use below line to generate jar file:
 
      mvn install
 
-
-
-------------------------------------------------
-
-PosTagger
-============
-+ [Maven Usage](#maven-usage)
-
-
-### Maven Usage
+## Maven Usage
 
 	<dependency>
   	<groupId>NlpToolkit</groupId>
   	<artifactId>PosTagger</artifactId>
   	<version>1.0.0</version>
 	</dependency>
+
+
+------------------------------------------------
+
+Detailed Description
+============
++ [PosTagger](#postagger)
+
+## PosTagger
+
+İngilizce pos tagging için kullanılan PosTagger'ı eğitmek için 
+
+	void train(PosTaggedCorpus corpus)
+	
+eğitilen PosTagger modelini kaydetmek için
+
+	void saveModel()
+	
+daha önce eğitilmiş bir PosTagger modelini yüklemek için
+
+	void loadModel()
+	
+ve yeni eğitilmiş veya yüklenmiş bir PosTagger modelini kullanarak bir cümleyi taglemek için
+
+	Sentence posTag(Sentence sentence)
+	
+metodu kullanılır.
+
+3 farklı PosTagger modeli desteklenmektedir. Rasgele bir tag ile kelimeleri taglemek için kullanılan
+
+	DummyPosTagger
+	
+o kelime için en çok kullanılan tag ile kelimeleri tagleyen
+
+	NaivePosTagger
+	
+ve Hmm tabanlı bir eğitim yapıp buna göre kelimeleri tagleyen
+
+	HmmPosTagger
