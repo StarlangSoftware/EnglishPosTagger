@@ -13,7 +13,7 @@ public class NaivePosTagger implements PosTagger{
      * Train method for the Naive pos tagger. The algorithm gets all possible tag list. Then counts all
      * possible tags (with its counts) for each possible word.
      *
-     * @param corpus Traning data for the tagger.
+     * @param corpus Training data for the tagger.
      */
     public void train(PosTaggedCorpus corpus) {
         HashMap<String, CounterHashMap<String>> map = new HashMap<>();

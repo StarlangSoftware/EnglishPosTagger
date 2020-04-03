@@ -11,7 +11,7 @@ public class DummyPosTagger implements PosTagger{
     /**
      * Train method for the Dummy pos tagger. The algorithm gets all possible tag list.
      *
-     * @param corpus Traning data for the tagger.
+     * @param corpus Training data for the tagger.
      */
     public void train(PosTaggedCorpus corpus) {
         Set<String> corpusTagList = corpus.getTagList();

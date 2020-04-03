@@ -14,7 +14,7 @@ public class HmmPosTagger implements PosTagger{
      * Train method for the Hmm pos tagger. The algorithm trains an Hmm from the corpus, where corpus constitutes
      * as an observation array.
      *
-     * @param corpus Traning data for the tagger.
+     * @param corpus Training data for the tagger.
      */
     public void train(PosTaggedCorpus corpus) {
         ArrayList<String>[] emittedSymbols = new ArrayList[corpus.sentenceCount()];
