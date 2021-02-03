@@ -1,5 +1,6 @@
 For Developers
 ============
+
 You can also see [Python](https://github.com/starlangsoftware/EnglishPosTagger-Py), [C++](https://github.com/starlangsoftware/EnglishPosTagger-CPP), [Swift](https://github.com/starlangsoftware/EnglishPosTagger-Swift), or [C#](https://github.com/starlangsoftware/EnglishPosTagger-CS) repository.
 
 ## Requirements
@@ -80,3 +81,40 @@ Use below line to generate jar file:
             <artifactId>PosTagger</artifactId>
             <version>1.0.0</version>
         </dependency>
+
+Detailed Description
+============
+
++ [PosTagger](#postagger)
+
+## PosTagger
+
+To train the PosTagger which is used for English pos tagging 
+
+	void train(PosTaggedCorpus corpus)
+	
+To save the trained PosTagger model
+
+	void saveModel()
+	
+To load an already trained PosTagger model
+
+	void loadModel()
+	
+To tag a sentence, using a newly trained or loaded PosTagger model
+
+	Sentence posTag(Sentence sentence)
+	
+
+3 different PosTagger models are supported:
+The one that is used to tag the sentences with a random tag
+
+	DummyPosTagger
+	
+the one that tags the word with the most used tag for a given word 
+
+	NaivePosTagger
+	
+the one that does an Hmm based training and tags the words accordingly 
+
+	HmmPosTagger
