@@ -48,8 +48,8 @@
     <dependencies>
         <dependency>
             <groupId>io.github.starlangsoftware</groupId>
-            <artifactId>Corpus</artifactId>
-            <version>1.0.3</version>
+            <artifactId>DataCollector</artifactId>
+            <version>1.0.20</version>
         </dependency>
         <dependency>
             <groupId>io.github.starlangsoftware</groupId>
@@ -121,6 +121,32 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>sentence-postag</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <archive>
+                                <manifest>
+                                    <mainClass>Annotation.TestPosTaggerFrame</mainClass>
+                                </manifest>
+                            </archive>
+                            <finalName>sentence-postag</finalName>
+                        </configuration>
+                    </execution>
+                </executions>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <appendAssemblyId>false</appendAssemblyId>
+                </configuration>
             </plugin>
         </plugins>
     </build>
