@@ -6,6 +6,7 @@ import AnnotatedSentence.AnnotatedWord;
 import DataCollector.Sentence.SentenceAnnotatorPanel;
 
 import java.awt.*;
+import java.util.HashMap;
 
 public class SentencePosTaggerPanel extends SentenceAnnotatorPanel {
     private String[] pennTagList = {"CC", "CD", "DT", "EX", "FW", "IN", "JJ", "JJR", "JJS", "LS",
@@ -17,6 +18,22 @@ public class SentencePosTaggerPanel extends SentenceAnnotatorPanel {
     public SentencePosTaggerPanel(String currentPath, String fileName){
         super(currentPath, fileName, ViewLayerType.POS_TAG);
         setLayout(new BorderLayout());
+    }
+
+    public void autoDetect(HashMap<String, String> priorTags){
+        boolean autoFilled = false;
+        for (int i = 0; i < sentence.wordCount(); i++){
+            AnnotatedWord word = (AnnotatedWord) sentence.getWord(i);
+            String name = word.getName().toLowerCase();
+            if (word.getPosTag() == null && priorTags.containsKey(name)){
+                word.setPosTag(priorTags.get(name));
+                autoFilled = true;
+            }
+        }
+        if (autoFilled){
+            sentence.save();
+        }
+        this.repaint();
     }
 
     public int populateLeaf(AnnotatedSentence sentence, int wordIndex){
