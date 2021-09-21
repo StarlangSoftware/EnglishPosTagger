@@ -13,7 +13,8 @@ public class SentencePosTaggerPanel extends SentenceAnnotatorPanel {
                                     "MD", "NN", "NNS", "NNP", "NNPS", "PDT", "POS", "PRP", "PRP$", "RB",
                                     "RBR", "RBS", "RP", "SYM", "TO", "UH", "VB", "VBD", "VBG", "VBN",
                                     "VBP", "VBZ", "WDT", "WP", "WP$", "WRB", "$", "#", ".", ",",
-                                    "``", "''", ":", "-LRB-", "-RRB-"};
+                                    "``", "''", ":", "-LRB-", "-RRB-", "AUX:VB", "AUX:VBP", "AUX:VBZ", "AUX:VBD", "AUX:VBG",
+                                    "AUX:VBN"};
 
     public SentencePosTaggerPanel(String currentPath, String fileName){
         super(currentPath, fileName, ViewLayerType.POS_TAG);
