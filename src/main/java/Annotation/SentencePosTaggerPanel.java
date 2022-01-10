@@ -6,6 +6,7 @@ import AnnotatedSentence.AnnotatedWord;
 import DataCollector.Sentence.SentenceAnnotatorPanel;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SentencePosTaggerPanel extends SentenceAnnotatorPanel {
@@ -19,6 +20,36 @@ public class SentencePosTaggerPanel extends SentenceAnnotatorPanel {
     public SentencePosTaggerPanel(String currentPath, String fileName){
         super(currentPath, fileName, ViewLayerType.POS_TAG);
         setLayout(new BorderLayout());
+    }
+
+    @Override
+    protected void setWordLayer() {
+        clickedWord.setPosTag((String) list.getSelectedValue());
+    }
+
+    @Override
+    protected void setBounds() {
+        pane.setBounds(((AnnotatedWord)sentence.getWord(selectedWordIndex)).getArea().x, ((AnnotatedWord)sentence.getWord(selectedWordIndex)).getArea().y + 20, 240, (int) (Toolkit.getDefaultToolkit().getScreenSize().height * 0.4));
+    }
+
+    @Override
+    protected void drawLayer(AnnotatedWord word, Graphics g, int currentLeft, int lineIndex, int wordIndex, int maxSize, ArrayList<Integer> wordSize, ArrayList<Integer> wordTotal) {
+        if (word.getPosTag() != null){
+            String correct = word.getPosTag();
+            g.drawString(correct, currentLeft, (lineIndex + 1) * lineSpace + 30);
+        }
+    }
+
+    @Override
+    protected int getMaxLayerLength(AnnotatedWord word, Graphics g) {
+        int maxSize = g.getFontMetrics().stringWidth(word.getName());
+        if (word.getPosTag() != null){
+            int size = g.getFontMetrics().stringWidth(word.getPosTag());
+            if (size > maxSize){
+                maxSize = size;
+            }
+        }
+        return maxSize;
     }
 
     public void autoDetect(HashMap<String, String> priorTags){
