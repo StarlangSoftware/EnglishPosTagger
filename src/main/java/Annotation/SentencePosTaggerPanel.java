@@ -33,6 +33,11 @@ public class SentencePosTaggerPanel extends SentenceAnnotatorPanel {
     }
 
     @Override
+    protected void setLineSpace() {
+        lineSpace = 80;
+    }
+
+    @Override
     protected void drawLayer(AnnotatedWord word, Graphics g, int currentLeft, int lineIndex, int wordIndex, int maxSize, ArrayList<Integer> wordSize, ArrayList<Integer> wordTotal) {
         if (word.getPosTag() != null){
             String correct = word.getPosTag();
