@@ -37,6 +37,8 @@ public class ViewSentencePosTaggerAnnotationFrame extends ViewSentenceAnnotation
                 case 3:
                     return "Pos Tag";
                 case 4:
+                    return "Root";
+                case 5:
                     return "Sentence";
                 default:
                     return "";
@@ -69,6 +71,11 @@ public class ViewSentencePosTaggerAnnotationFrame extends ViewSentenceAnnotation
                 row.add("" + (j + 1));
                 row.add(word.getName());
                 row.add(word.getPosTag());
+                if (word.getMetamorphicParse() != null){
+                    row.add(word.getMetamorphicParse().toString());
+                } else {
+                    row.add("");
+                }
                 row.add(sentence.toWords());
                 row.add("" + i);
                 row.add("0");
@@ -79,7 +86,7 @@ public class ViewSentencePosTaggerAnnotationFrame extends ViewSentenceAnnotation
 
     public ViewSentencePosTaggerAnnotationFrame(AnnotatedCorpus corpus, SentencePosTaggerFrame sentencePosTaggerFrame){
         super(corpus);
-        COLOR_COLUMN_INDEX = 6;
+        COLOR_COLUMN_INDEX = 7;
         TAG_INDEX = 3;
         prepareData(corpus);
         dataTable = new JTable(new PosTaggerTableDataModel());

@@ -4,7 +4,11 @@ import AnnotatedSentence.AnnotatedCorpus;
 import DataCollector.ParseTree.TreeEditorPanel;
 import DataCollector.Sentence.SentenceAnnotatorFrame;
 import DataCollector.Sentence.SentenceAnnotatorPanel;
-import Dictionary.TxtWord;
+import Dictionary.ExceptionalWord;
+import Dictionary.Pos;
+import Util.FileUtils;
+import Xml.XmlDocument;
+import Xml.XmlElement;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -14,12 +18,16 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Random;
 
 public class SentencePosTaggerFrame extends SentenceAnnotatorFrame  {
     private JCheckBox autoPosDetectionOption;
     private HashMap<String, String> priorTags = new HashMap<>();
+    private HashMap<String, ArrayList<ExceptionalWord>> exceptionList;
+    private HashSet<String> literalList;
 
     private void readPennDefaultTags(){
         ClassLoader classLoader = getClass().getClassLoader();
@@ -38,10 +46,28 @@ public class SentencePosTaggerFrame extends SentenceAnnotatorFrame  {
         }
     }
 
+    private void readLiteralList(String fileName){
+        literalList = new HashSet<>();
+        ClassLoader classLoader = getClass().getClassLoader();
+        BufferedReader br = new BufferedReader(new InputStreamReader(classLoader.getResourceAsStream(fileName), StandardCharsets.UTF_8));
+        String line;
+        try {
+            line = br.readLine();
+            while (line != null) {
+                literalList.add(line);
+                line = br.readLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public SentencePosTaggerFrame(){
         super();
         autoPosDetectionOption = new JCheckBox("Auto Part Of Speech Detection", false);
         toolBar.add(autoPosDetectionOption);
+        readExceptionFile("english_exception.xml");
+        readLiteralList("english_literals.txt");
         readPennDefaultTags();
         AnnotatedCorpus corpus;
         corpus = new AnnotatedCorpus(new File(TreeEditorPanel.phrasePath));
@@ -54,7 +80,56 @@ public class SentencePosTaggerFrame extends SentenceAnnotatorFrame  {
 
     @Override
     protected SentenceAnnotatorPanel generatePanel(String currentPath, String rawFileName) {
-        return new SentencePosTaggerPanel(currentPath, rawFileName);
+        return new SentencePosTaggerPanel(currentPath, rawFileName, exceptionList, literalList);
+    }
+
+    /**
+     * Method constructs a DOM parser using the dtd/xml schema parser configuration and using this parser it
+     * reads exceptions from file and puts to exceptionList HashMap.
+     *
+     * @param exceptionFileName exception file to be read
+     */
+    public void readExceptionFile(String exceptionFileName) {
+        String wordName, rootForm;
+        Pos pos;
+        XmlElement wordNode, rootNode;
+        XmlDocument doc = new XmlDocument(FileUtils.getInputStream(exceptionFileName));
+        doc.parse();
+        rootNode = doc.getFirstChild();
+        wordNode = rootNode.getFirstChild();
+        exceptionList = new HashMap<>();
+        while (wordNode != null) {
+            if (wordNode.hasAttributes()) {
+                wordName = wordNode.getAttributeValue("name");
+                rootForm = wordNode.getAttributeValue("root");
+                switch (wordNode.getAttributeValue("pos")) {
+                    case "Adj":
+                        pos = Pos.ADJECTIVE;
+                        break;
+                    case "Adv":
+                        pos = Pos.ADVERB;
+                        break;
+                    case "Noun":
+                        pos = Pos.NOUN;
+                        break;
+                    case "Verb":
+                        pos = Pos.VERB;
+                        break;
+                    default:
+                        pos = Pos.NOUN;
+                        break;
+                }
+                ArrayList<ExceptionalWord> rootList;
+                if (exceptionList.containsKey(wordName)){
+                    rootList = exceptionList.get(wordName);
+                } else {
+                    rootList = new ArrayList<ExceptionalWord>();
+                }
+                rootList.add(new ExceptionalWord(wordName, rootForm, pos));
+                exceptionList.put(wordName, rootList);
+            }
+            wordNode = wordNode.getNextSibling();
+        }
     }
 
     public void next(int count){
