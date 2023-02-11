@@ -170,7 +170,7 @@ public class SentencePosTaggerPanel extends SentenceAnnotatorPanel {
                     }
                 }
             case "VBZ":
-                if (word.endsWith("s")){
+                if (word.endsWith("s") && literalList.contains(word.toLowerCase().substring(0, word.length() - 1))){
                     return word.toLowerCase().substring(0, word.length() - 1);
                 } else {
                     return word.toLowerCase();
@@ -189,20 +189,27 @@ public class SentencePosTaggerPanel extends SentenceAnnotatorPanel {
                 }
             case "JJR":
             case "RBR":
-                if (word.endsWith("er")){
+                if (word.endsWith("er") && literalList.contains(word.toLowerCase().substring(0, word.length() - 2))){
                     return word.toLowerCase().substring(0, word.length() - 2);
                 } else {
                     return word.toLowerCase();
                 }
             case "JJS":
             case "RBS":
-                if (word.endsWith("est")){
+                if (word.endsWith("est") && literalList.contains(word.toLowerCase().substring(0, word.length() - 3))){
                     return word.toLowerCase().substring(0, word.length() - 3);
                 } else {
                     return word.toLowerCase();
                 }
             case "VBG":
                 if (word.endsWith("ing")){
+                    if (literalList.contains(word.toLowerCase().substring(0, word.length() - 3))){
+                        return word.toLowerCase().substring(0, word.length() - 3);
+                    } else {
+                        if (literalList.contains(word.toLowerCase().substring(0, word.length() - 3) + "e")){
+                            return word.toLowerCase().substring(0, word.length() - 3) + "e";
+                        }
+                    }
                     return word.toLowerCase().substring(0, word.length() - 3);
                 } else {
                     return word.toLowerCase();
