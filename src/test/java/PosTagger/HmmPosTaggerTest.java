@@ -9,7 +9,7 @@ public class HmmPosTaggerTest {
 
     @Test
     public void testPosTag() {
-        /*PosTagger posTagger = new HmmPosTagger();
+        PosTagger posTagger = new HmmPosTagger();
         PosTaggedCorpus posTaggedCorpus = new PosTaggedCorpus("brown.txt");
         posTagger.train(posTaggedCorpus);
         int correct = 0, incorrect = 0;
@@ -26,6 +26,6 @@ public class HmmPosTaggerTest {
                 }
             }
         }
-        assertEquals(97.59, 100 * correct / (correct + incorrect + 0.0), 0.01);*/
+        assertEquals(97.59, 100 * correct / (correct + incorrect + 0.0), 0.01);
     }
 }
