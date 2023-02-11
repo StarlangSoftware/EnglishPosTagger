@@ -162,7 +162,11 @@ public class SentencePosTaggerPanel extends SentenceAnnotatorPanel {
                     if (word.endsWith("es") && literalList.contains(word.toLowerCase().substring(0, word.length() - 2))){
                         return word.toLowerCase().substring(0, word.length() - 2);
                     } else {
-                        return word.toLowerCase();
+                        if (word.endsWith("ies") && literalList.contains(word.toLowerCase().substring(0, word.length() - 3) + "y")) {
+                            return word.toLowerCase().substring(0, word.length() - 3) + "y";
+                        } else {
+                            return word.toLowerCase();
+                        }
                     }
                 }
             case "VBZ":
