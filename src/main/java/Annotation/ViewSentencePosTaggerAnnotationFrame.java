@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class ViewSentencePosTaggerAnnotationFrame extends ViewSentenceAnnotationFrame implements ActionListener  {
+    protected int ROOT_INDEX;
 
     public void actionPerformed(ActionEvent e) {
         super.actionPerformed(e);
@@ -18,6 +19,9 @@ public class ViewSentencePosTaggerAnnotationFrame extends ViewSentenceAnnotation
             if (selectedRow != -1) {
                 for (int rowNo : dataTable.getSelectedRows()) {
                     updatePosTag(rowNo, data.get(selectedRow).get(TAG_INDEX));
+                }
+                for (int rowNo : dataTable.getSelectedRows()) {
+                    updateRoot(rowNo, data.get(selectedRow).get(ROOT_INDEX));
                 }
             }
         }
@@ -49,6 +53,9 @@ public class ViewSentencePosTaggerAnnotationFrame extends ViewSentenceAnnotation
             if (col == TAG_INDEX && !data.get(row).get(TAG_INDEX).equals(value)) {
                 updatePosTag(row, (String) value);
             }
+            if (col == ROOT_INDEX && !data.get(row).get(ROOT_INDEX).equals(value)) {
+                updateRoot(row, (String) value);
+            }
         }
     }
 
@@ -57,6 +64,14 @@ public class ViewSentencePosTaggerAnnotationFrame extends ViewSentenceAnnotation
         AnnotatedSentence sentence = (AnnotatedSentence) corpus.getSentence(Integer.parseInt(data.get(row).get(COLOR_COLUMN_INDEX - 1)));
         AnnotatedWord word = (AnnotatedWord) sentence.getWord(Integer.parseInt(data.get(row).get(WORD_POS_INDEX)) - 1);
         word.setPosTag(newValue);
+        sentence.save();
+    }
+
+    private void updateRoot(int row, String newValue){
+        data.get(row).set(ROOT_INDEX, newValue);
+        AnnotatedSentence sentence = (AnnotatedSentence) corpus.getSentence(Integer.parseInt(data.get(row).get(COLOR_COLUMN_INDEX - 1)));
+        AnnotatedWord word = (AnnotatedWord) sentence.getWord(Integer.parseInt(data.get(row).get(WORD_POS_INDEX)) - 1);
+        word.setMetamorphicParse(newValue);
         sentence.save();
     }
 
@@ -88,6 +103,7 @@ public class ViewSentencePosTaggerAnnotationFrame extends ViewSentenceAnnotation
         super(corpus);
         COLOR_COLUMN_INDEX = 7;
         TAG_INDEX = 3;
+        ROOT_INDEX = 4;
         prepareData(corpus);
         dataTable = new JTable(new PosTaggerTableDataModel());
         dataTable.getColumnModel().getColumn(FILENAME_INDEX).setMinWidth(150);

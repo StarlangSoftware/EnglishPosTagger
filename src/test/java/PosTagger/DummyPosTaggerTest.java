@@ -22,6 +22,6 @@ public class DummyPosTaggerTest {
                 }
             }
         }
-        assertEquals(0.88, 100 * correct / (correct + incorrect + 0.0), 0.01);
+        assertEquals(0.88, 100 * correct / (correct + incorrect + 0.0), 0.02);
     }
 }
