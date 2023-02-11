@@ -57,6 +57,10 @@ public class ViewSentencePosTaggerAnnotationFrame extends ViewSentenceAnnotation
                 updateRoot(row, (String) value);
             }
         }
+
+        public boolean isCellEditable(int row, int col) {
+            return col == TAG_INDEX || col == ROOT_INDEX;
+        }
     }
 
     private void updatePosTag(int row, String newValue){
