@@ -95,11 +95,15 @@ public class ViewSentencePosTaggerAnnotationFrame extends ViewSentenceAnnotation
                 row.add(word.getPosTag());
                 if (word.getMetamorphicParse() != null){
                     String root = word.getMetamorphicParse().toString();
-                    String capital = (root.charAt(0) + "").toUpperCase() + root.toLowerCase().substring(1);
-                    if (Word.isPunctuation(root) || english.getSynSetsWithLiteral(root).size() > 0 || english.getSynSetsWithLiteral(capital).size() > 0){
-                        row.add(root);
+                    if (root.length() > 0){
+                        String capital = (root.charAt(0) + "").toUpperCase() + root.toLowerCase().substring(1);
+                        if (Word.isPunctuation(root) || english.getSynSetsWithLiteral(root).size() > 0 || english.getSynSetsWithLiteral(capital).size() > 0){
+                            row.add(root);
+                        } else {
+                            row.add("<html><b><font color=\"red\">" + root + "</html>");
+                        }
                     } else {
-                        row.add("<html><b><font color=\"red\">" + root + "</html>");
+                        row.add("");
                     }
                 } else {
                     row.add("");
