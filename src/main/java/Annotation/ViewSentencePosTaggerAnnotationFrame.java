@@ -3,6 +3,8 @@ package Annotation;
 import AnnotatedSentence.*;
 import DataCollector.ParseTree.TreeEditorPanel;
 import DataCollector.Sentence.ViewSentenceAnnotationFrame;
+import Dictionary.Word;
+import WordNet.WordNet;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,6 +14,7 @@ import java.util.ArrayList;
 
 public class ViewSentencePosTaggerAnnotationFrame extends ViewSentenceAnnotationFrame implements ActionListener  {
     protected int ROOT_INDEX;
+    private WordNet english;
 
     public void actionPerformed(ActionEvent e) {
         super.actionPerformed(e);
@@ -91,7 +94,13 @@ public class ViewSentencePosTaggerAnnotationFrame extends ViewSentenceAnnotation
                 row.add(word.getName());
                 row.add(word.getPosTag());
                 if (word.getMetamorphicParse() != null){
-                    row.add(word.getMetamorphicParse().toString());
+                    String root = word.getMetamorphicParse().toString();
+                    String capital = (root.charAt(0) + "").toUpperCase() + root.toLowerCase().substring(1);
+                    if (Word.isPunctuation(root) || english.getSynSetsWithLiteral(root).size() > 0 || english.getSynSetsWithLiteral(capital).size() > 0){
+                        row.add(root);
+                    } else {
+                        row.add("<html><b><font color=\"red\">" + root + "</html>");
+                    }
                 } else {
                     row.add("");
                 }
@@ -105,6 +114,7 @@ public class ViewSentencePosTaggerAnnotationFrame extends ViewSentenceAnnotation
 
     public ViewSentencePosTaggerAnnotationFrame(AnnotatedCorpus corpus, SentencePosTaggerFrame sentencePosTaggerFrame){
         super(corpus);
+        english = new WordNet("english_wordnet_version_31.xml");
         COLOR_COLUMN_INDEX = 7;
         TAG_INDEX = 3;
         ROOT_INDEX = 4;
