@@ -3,6 +3,7 @@ package Annotation;
 import AnnotatedSentence.*;
 import DataCollector.ParseTree.TreeEditorPanel;
 import DataCollector.Sentence.ViewSentenceAnnotationFrame;
+import Dictionary.TxtWord;
 import Dictionary.Word;
 import WordNet.WordNet;
 
@@ -97,7 +98,11 @@ public class ViewSentencePosTaggerAnnotationFrame extends ViewSentenceAnnotation
                     String root = word.getMetamorphicParse().toString();
                     if (root.length() > 0){
                         String capital = (root.charAt(0) + "").toUpperCase() + root.toLowerCase().substring(1);
-                        if (Word.isPunctuation(root) || english.getSynSetsWithLiteral(root).size() > 0 || english.getSynSetsWithLiteral(capital).size() > 0){
+                        if (Word.isPunctuation(root) || Word.isEnglishStopWord(root) || root.equalsIgnoreCase("what") ||
+                                root.equalsIgnoreCase("that") || root.equalsIgnoreCase("this") || root.equalsIgnoreCase("when") ||
+                                root.equalsIgnoreCase("which") || root.equalsIgnoreCase("how") || root.equalsIgnoreCase("where") ||
+                                root.equalsIgnoreCase("whose") || root.equalsIgnoreCase("whom") || root.matches("\\d+") ||
+                                english.getSynSetsWithLiteral(root).size() > 0 || english.getSynSetsWithLiteral(capital).size() > 0){
                             row.add(root);
                         } else {
                             row.add("<html><b><font color=\"red\">" + root + "</html>");
