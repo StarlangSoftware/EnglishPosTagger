@@ -11,7 +11,7 @@ import Xml.XmlDocument;
 import Xml.XmlElement;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.File;
@@ -24,8 +24,8 @@ import java.util.HashSet;
 import java.util.Random;
 
 public class SentencePosTaggerFrame extends SentenceAnnotatorFrame  {
-    private JCheckBox autoPosDetectionOption;
-    private HashMap<String, String> priorTags = new HashMap<>();
+    private final JCheckBox autoPosDetectionOption;
+    private final HashMap<String, String> priorTags = new HashMap<>();
     private HashMap<String, ArrayList<ExceptionalWord>> exceptionList;
     private HashSet<String> literalList;
 
@@ -41,8 +41,7 @@ public class SentencePosTaggerFrame extends SentenceAnnotatorFrame  {
                 priorTags.put(items[0], items[1 + random.nextInt(items.length - 1)]);
                 line = br.readLine();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ignored) {
         }
     }
 
@@ -57,8 +56,7 @@ public class SentencePosTaggerFrame extends SentenceAnnotatorFrame  {
                 literalList.add(line);
                 line = br.readLine();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ignored) {
         }
     }
 
@@ -71,10 +69,8 @@ public class SentencePosTaggerFrame extends SentenceAnnotatorFrame  {
         readPennDefaultTags();
         AnnotatedCorpus corpus;
         corpus = new AnnotatedCorpus(new File(TreeEditorPanel.phrasePath));
-        JMenuItem itemViewAnnotated = addMenuItem(projectMenu, "View Annotations", KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
-        itemViewAnnotated.addActionListener(e -> {
-            new ViewSentencePosTaggerAnnotationFrame(corpus, this);
-        });
+        JMenuItem itemViewAnnotated = addMenuItem(projectMenu, "View Annotations", KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
+        itemViewAnnotated.addActionListener(e -> new ViewSentencePosTaggerAnnotationFrame(corpus, this));
         JOptionPane.showMessageDialog(this, "Annotated corpus is loaded!", "Shallow Parse Annotation", JOptionPane.INFORMATION_MESSAGE);
     }
 
@@ -109,9 +105,6 @@ public class SentencePosTaggerFrame extends SentenceAnnotatorFrame  {
                     case "Adv":
                         pos = Pos.ADVERB;
                         break;
-                    case "Noun":
-                        pos = Pos.NOUN;
-                        break;
                     case "Verb":
                         pos = Pos.VERB;
                         break;
@@ -123,7 +116,7 @@ public class SentencePosTaggerFrame extends SentenceAnnotatorFrame  {
                 if (exceptionList.containsKey(wordName)){
                     rootList = exceptionList.get(wordName);
                 } else {
-                    rootList = new ArrayList<ExceptionalWord>();
+                    rootList = new ArrayList<>();
                 }
                 rootList.add(new ExceptionalWord(wordName, rootForm, pos));
                 exceptionList.put(wordName, rootList);

@@ -3,7 +3,6 @@ package Annotation;
 import AnnotatedSentence.*;
 import DataCollector.ParseTree.TreeEditorPanel;
 import DataCollector.Sentence.ViewSentenceAnnotationFrame;
-import Dictionary.TxtWord;
 import Dictionary.Word;
 import WordNet.WordNet;
 
@@ -15,7 +14,7 @@ import java.util.ArrayList;
 
 public class ViewSentencePosTaggerAnnotationFrame extends ViewSentenceAnnotationFrame implements ActionListener  {
     protected int ROOT_INDEX;
-    private WordNet english;
+    private final WordNet english;
 
     public void actionPerformed(ActionEvent e) {
         super.actionPerformed(e);
@@ -96,13 +95,13 @@ public class ViewSentencePosTaggerAnnotationFrame extends ViewSentenceAnnotation
                 row.add(word.getPosTag());
                 if (word.getMetamorphicParse() != null){
                     String root = word.getMetamorphicParse().toString();
-                    if (root.length() > 0){
+                    if (!root.isEmpty()){
                         String capital = (root.charAt(0) + "").toUpperCase() + root.toLowerCase().substring(1);
                         if (Word.isPunctuation(root) || Word.isEnglishStopWord(root) || root.equalsIgnoreCase("what") ||
                                 root.equalsIgnoreCase("that") || root.equalsIgnoreCase("this") || root.equalsIgnoreCase("when") ||
                                 root.equalsIgnoreCase("which") || root.equalsIgnoreCase("how") || root.equalsIgnoreCase("where") ||
                                 root.equalsIgnoreCase("whose") || root.equalsIgnoreCase("whom") || root.matches("\\d+") ||
-                                english.getSynSetsWithLiteral(root).size() > 0 || english.getSynSetsWithLiteral(capital).size() > 0){
+                                !english.getSynSetsWithLiteral(root).isEmpty() || !english.getSynSetsWithLiteral(capital).isEmpty()){
                             row.add(root);
                         } else {
                             row.add("<html><b><font color=\"red\">" + root + "</html>");

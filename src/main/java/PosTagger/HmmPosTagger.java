@@ -11,7 +11,7 @@ public class HmmPosTagger implements PosTagger{
     private Hmm<String, Word> hmm;
 
     /**
-     * Train method for the Hmm pos tagger. The algorithm trains an Hmm from the corpus, where corpus constitutes
+     * Train method for the Hmm pos tagger. The algorithm trains a Hmm from the corpus, where corpus constitutes
      * as an observation array.
      *
      * @param corpus Training data for the tagger.
@@ -19,13 +19,13 @@ public class HmmPosTagger implements PosTagger{
     public void train(PosTaggedCorpus corpus) {
         ArrayList<String>[] emittedSymbols = new ArrayList[corpus.sentenceCount()];
         for (int i = 0; i < emittedSymbols.length; i++){
-            emittedSymbols[i] = new ArrayList<String>();
+            emittedSymbols[i] = new ArrayList<>();
             for (int j = 0; j < corpus.getSentence(i).wordCount(); j++){
                 PosTaggedWord word = (PosTaggedWord) corpus.getSentence(i).getWord(j);
                 emittedSymbols[i].add(word.getTag());
             }
         }
-        hmm = new Hmm1<String, Word>(corpus.getTagList(), emittedSymbols, corpus.getAllWordsAsArray());
+        hmm = new Hmm1<>(corpus.getTagList(), emittedSymbols, corpus.getAllWordsAsArray());
     }
 
     /**
@@ -61,8 +61,7 @@ public class HmmPosTagger implements PosTagger{
             inFile = new FileInputStream("Model/hmmpostagger.bin");
             inObject = new ObjectInputStream(inFile);
             hmm = (Hmm1<String, Word>) inObject.readObject();
-        } catch (ClassNotFoundException | IOException e) {
-            e.printStackTrace();
+        } catch (ClassNotFoundException | IOException ignored) {
         }
     }
 }

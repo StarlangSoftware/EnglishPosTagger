@@ -13,14 +13,14 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 public class SentencePosTaggerPanel extends SentenceAnnotatorPanel {
-    private String[] pennTagList = {"CC", "CD", "DT", "EX", "FW", "IN", "JJ", "JJR", "JJS", "LS",
+    private final String[] pennTagList = {"CC", "CD", "DT", "EX", "FW", "IN", "JJ", "JJR", "JJS", "LS",
                                     "MD", "NN", "NNS", "NNP", "NNPS", "PDT", "POS", "PRP", "PRP$", "RB",
                                     "RBR", "RBS", "RP", "SYM", "TO", "UH", "VB", "VBD", "VBG", "VBN",
                                     "VBP", "VBZ", "WDT", "WP", "WP$", "WRB", "$", "#", ".", ",",
                                     "``", "''", ":", "-LRB-", "-RRB-", "AUX:VB", "AUX:VBP", "AUX:VBZ", "AUX:VBD", "AUX:VBG",
                                     "AUX:VBN"};
-    private HashMap<String, ArrayList<ExceptionalWord>> exceptionList;
-    private HashSet<String> literalList;
+    private final HashMap<String, ArrayList<ExceptionalWord>> exceptionList;
+    private final HashSet<String> literalList;
 
     public SentencePosTaggerPanel(String currentPath, String fileName, HashMap<String, ArrayList<ExceptionalWord>> exceptionList, HashSet<String> literalList){
         super(currentPath, fileName, ViewLayerType.POS_TAG);

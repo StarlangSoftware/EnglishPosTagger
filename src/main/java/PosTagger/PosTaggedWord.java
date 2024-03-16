@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 public class PosTaggedWord extends Word implements Serializable{
 
-    private String tag;
+    private final String tag;
 
     /**
      * A constructor of {@link PosTaggedWord} which takes name and tag as input and sets the corresponding attributes

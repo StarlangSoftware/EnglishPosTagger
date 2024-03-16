@@ -4,7 +4,6 @@ import Corpus.*;
 import DataStructure.CounterHashMap;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,14 +11,14 @@ import java.util.Set;
 
 public class PosTaggedCorpus extends Corpus{
 
-    private CounterHashMap<String> tagList;
+    private final CounterHashMap<String> tagList;
 
     /**
      * A constructor of {@link PosTaggedCorpus} which initializes the sentences of the corpus, the word list of
      * the corpus, and all possible tags.
      */
     public PosTaggedCorpus(){
-        sentences = new ArrayList<Sentence>();
+        sentences = new ArrayList<>();
         wordList = new CounterHashMap<>();
         tagList = new CounterHashMap<>();
     }
@@ -42,14 +41,14 @@ public class PosTaggedCorpus extends Corpus{
     public PosTaggedCorpus(String fileName){
         String line, name, tag, shortTag;
         Sentence newSentence = new Sentence();
-        sentences = new ArrayList<Sentence>();
+        sentences = new ArrayList<>();
         tagList = new CounterHashMap<>();
         try {
             FileReader fr = new FileReader(fileName);
             BufferedReader br = new BufferedReader(fr);
             line = br.readLine();
             while (line != null){
-                String words[] = line.split("[ \\t]");
+                String[] words = line.split("[ \\t]");
                 for (String word:words){
                     if (!word.isEmpty()){
                         if (word.contains("/")){
@@ -80,10 +79,7 @@ public class PosTaggedCorpus extends Corpus{
             if (newSentence.wordCount() > 0){
                 addSentence(newSentence);
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ignored) {
         }
     }
 

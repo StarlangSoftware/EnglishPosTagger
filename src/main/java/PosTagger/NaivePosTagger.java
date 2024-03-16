@@ -61,8 +61,7 @@ public class NaivePosTagger implements PosTagger{
             outFile = new FileOutputStream("naive.bin");
             outObject = new ObjectOutputStream (outFile);
             outObject.writeObject(maxMap);
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ignored) {
         }
     }
 
@@ -76,8 +75,7 @@ public class NaivePosTagger implements PosTagger{
             inFile = new FileInputStream("naive.bin");
             inObject = new ObjectInputStream(inFile);
             maxMap = (HashMap<String, String>) inObject.readObject();
-        } catch (ClassNotFoundException | IOException e) {
-            e.printStackTrace();
+        } catch (ClassNotFoundException | IOException ignored) {
         }
     }
 }

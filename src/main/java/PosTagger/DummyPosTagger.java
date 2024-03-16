@@ -16,7 +16,7 @@ public class DummyPosTagger implements PosTagger{
     public void train(PosTaggedCorpus corpus) {
         Set<String> corpusTagList = corpus.getTagList();
         tagList = new String[corpusTagList.size()];
-        tagList = (String[]) corpusTagList.toArray(tagList);
+        tagList = corpusTagList.toArray(tagList);
     }
 
     /**
@@ -45,8 +45,7 @@ public class DummyPosTagger implements PosTagger{
             outFile = new FileOutputStream("dummy.bin");
             outObject = new ObjectOutputStream (outFile);
             outObject.writeObject(tagList);
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ignored) {
         }
     }
 
@@ -60,8 +59,7 @@ public class DummyPosTagger implements PosTagger{
             inFile = new FileInputStream("dummy.bin");
             inObject = new ObjectInputStream(inFile);
             tagList = (String[]) inObject.readObject();
-        } catch (ClassNotFoundException | IOException e) {
-            e.printStackTrace();
+        } catch (ClassNotFoundException | IOException ignored) {
         }
     }
 }
