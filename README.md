@@ -94,7 +94,7 @@ Use below line to generate jar file:
         <dependency>
             <groupId>io.github.starlangsoftware</groupId>
             <artifactId>PosTagger</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.3</version>
         </dependency>
 
 Detailed Description
