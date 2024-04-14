@@ -16,6 +16,10 @@ public class ViewSentencePosTaggerAnnotationFrame extends ViewSentenceAnnotation
     protected int ROOT_INDEX;
     private final WordNet english;
 
+    /**
+     * Updates the pos tag for the selected sentences.
+     * @param e Action event to be processed.
+     */
     public void actionPerformed(ActionEvent e) {
         super.actionPerformed(e);
         if (PASTE.equals(e.getActionCommand())) {
@@ -33,6 +37,11 @@ public class ViewSentencePosTaggerAnnotationFrame extends ViewSentenceAnnotation
 
     public class PosTaggerTableDataModel extends TableDataModel {
 
+        /**
+         * Returns the name of the given column.
+         * @param col  the column being queried
+         * @return Name of the given column
+         */
         public String getColumnName(int col) {
             switch (col) {
                 case FILENAME_INDEX:
@@ -52,6 +61,12 @@ public class ViewSentencePosTaggerAnnotationFrame extends ViewSentenceAnnotation
             }
         }
 
+        /**
+         * Updates the pos tag for the sentence in the given cell.
+         * @param value   value to assign to cell
+         * @param row   row of cell
+         * @param col  column of cell
+         */
         public void setValueAt(Object value, int row, int col) {
             if (col == TAG_INDEX && !data.get(row).get(TAG_INDEX).equals(value)) {
                 updatePosTag(row, (String) value);
@@ -66,6 +81,12 @@ public class ViewSentencePosTaggerAnnotationFrame extends ViewSentenceAnnotation
         }
     }
 
+    /**
+     * Sets the value in the data table. After finding the corresponding sentence in that row, updates the pos tag of
+     * that word associated with that row.
+     * @param row Index of the row
+     * @param newValue Pos tag to be assigned.
+     */
     private void updatePosTag(int row, String newValue){
         data.get(row).set(TAG_INDEX, newValue);
         AnnotatedSentence sentence = (AnnotatedSentence) corpus.getSentence(Integer.parseInt(data.get(row).get(COLOR_COLUMN_INDEX - 1)));
@@ -74,6 +95,12 @@ public class ViewSentencePosTaggerAnnotationFrame extends ViewSentenceAnnotation
         sentence.save();
     }
 
+    /**
+     * Sets the value in the data table. After finding the corresponding sentence in that row, updates the root form of
+     * that word associated with that row.
+     * @param row Index of the row
+     * @param newValue Root form to be assigned.
+     */
     private void updateRoot(int row, String newValue){
         data.get(row).set(ROOT_INDEX, newValue);
         AnnotatedSentence sentence = (AnnotatedSentence) corpus.getSentence(Integer.parseInt(data.get(row).get(COLOR_COLUMN_INDEX - 1)));
@@ -82,6 +109,19 @@ public class ViewSentencePosTaggerAnnotationFrame extends ViewSentenceAnnotation
         sentence.save();
     }
 
+    /**
+     * Constructs the data table. For every sentence, the columns are:
+     * <ol>
+     *     <li>Annotated sentence file name</li>
+     *     <li>Index of the word</li>
+     *     <li>Word itself</li>
+     *     <li>Pos tag of the word</li>
+     *     <li>Root of the word</li>
+     *     <li>Annotated sentence itself</li>
+     *     <li>Sentence index</li>
+     * </ol>
+     * @param corpus Annotated corpus
+     */
     protected void prepareData(AnnotatedCorpus corpus){
         data = new ArrayList<>();
         for (int i = 0; i < corpus.sentenceCount(); i++){
@@ -120,6 +160,13 @@ public class ViewSentencePosTaggerAnnotationFrame extends ViewSentenceAnnotation
         }
     }
 
+    /**
+     * Constructs Pos tag annotation frame viewer. Arranges the minimum width, maximum width or with of every column. If
+     * the user double-clicks any row, the method automatically creates a new panel showing associated annotated
+     * sentence.
+     * @param corpus Annotated corpus
+     * @param sentencePosTaggerFrame Frame in which new panels will be created, when the user double-clicks a row.
+     */
     public ViewSentencePosTaggerAnnotationFrame(AnnotatedCorpus corpus, SentencePosTaggerFrame sentencePosTaggerFrame){
         super(corpus);
         english = new WordNet("english_wordnet_version_31.xml");

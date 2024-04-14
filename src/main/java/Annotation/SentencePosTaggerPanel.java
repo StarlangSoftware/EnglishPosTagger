@@ -22,6 +22,13 @@ public class SentencePosTaggerPanel extends SentenceAnnotatorPanel {
     private final HashMap<String, ArrayList<ExceptionalWord>> exceptionList;
     private final HashSet<String> literalList;
 
+    /**
+     * Constructor for the pos tag panel for an annotated sentence. Sets the attributes.
+     * @param currentPath The absolute path of the annotated file.
+     * @param fileName The raw file name of the annotated file.
+     * @param exceptionList Enlists exceptional cases in English language.
+     * @param literalList Enlists all possible root word for this annotation.
+     */
     public SentencePosTaggerPanel(String currentPath, String fileName, HashMap<String, ArrayList<ExceptionalWord>> exceptionList, HashSet<String> literalList){
         super(currentPath, fileName, ViewLayerType.POS_TAG);
         this.exceptionList = exceptionList;
@@ -29,21 +36,41 @@ public class SentencePosTaggerPanel extends SentenceAnnotatorPanel {
         setLayout(new BorderLayout());
     }
 
+    /**
+     * Updates the Pos tag layer of the annotated word.
+     */
     @Override
     protected void setWordLayer() {
         clickedWord.setPosTag((String) list.getSelectedValue());
     }
 
+    /**
+     * Sets the width and height of the JList that displays the pos tags.
+     */
     @Override
     protected void setBounds() {
         pane.setBounds(((AnnotatedWord)sentence.getWord(selectedWordIndex)).getArea().getX(), ((AnnotatedWord)sentence.getWord(selectedWordIndex)).getArea().getY() + 20, 240, (int) (Toolkit.getDefaultToolkit().getScreenSize().height * 0.4));
     }
 
+    /**
+     * Sets the space between displayed lines in the sentence.
+     */
     @Override
     protected void setLineSpace() {
         lineSpace = 80;
     }
 
+    /**
+     * Draws the pos tag and root of the word.
+     * @param word Annotated word itself.
+     * @param g Graphics on which pos tag and root form is drawn.
+     * @param currentLeft Current position on the x-axis, where the pos tag and root form will be aligned.
+     * @param lineIndex Current line of the word, if the sentence resides in multiple lines on the screen.
+     * @param wordIndex Index of the word in the annotated sentence.
+     * @param maxSize Maximum size in pixels of anything drawn in the screen.
+     * @param wordSize Array storing the sizes of all words in pixels in the annotated sentence.
+     * @param wordTotal Array storing the total size until that word of all words in the annotated sentence.
+     */
     @Override
     protected void drawLayer(AnnotatedWord word, Graphics g, int currentLeft, int lineIndex, int wordIndex, int maxSize, ArrayList<Integer> wordSize, ArrayList<Integer> wordTotal) {
         if (word.getMetamorphicParse() != null){
@@ -59,6 +86,12 @@ public class SentencePosTaggerPanel extends SentenceAnnotatorPanel {
         g.setColor(Color.RED);
     }
 
+    /**
+     * Compares the size of the word and the size of the pos tag in pixels and returns the maximum of them.
+     * @param word Word annotated.
+     * @param g Graphics on which pos tag is drawn.
+     * @return Maximum of the graphic sizes of word and its pos tag.
+     */
     @Override
     protected int getMaxLayerLength(AnnotatedWord word, Graphics g) {
         int maxSize = g.getFontMetrics().stringWidth(word.getName());
@@ -71,6 +104,23 @@ public class SentencePosTaggerPanel extends SentenceAnnotatorPanel {
         return maxSize;
     }
 
+    /**
+     * Detects the root of the word given its tag. First checks the exception list, if the word is in the exception
+     * list, it automatically assigns that root form. After, it checks pronouns and ordinal numbers, and if the word is
+     * one of them, assigns the root form accordingly. As a last step, according to the pos tag, checks alternatives
+     * such as:
+     * <ul>
+     *     <li>For plural forms, removes 's', 'es', or 'ies' from the end.</li>
+     *     <li>For third person singular verbs, removes 's' from the end.</li>
+     *     <li>For past or present perfect tenses, removes 'ed' from the end.</li>
+     *     <li>For continuous tenses, removes 'ing' from the end.</li>
+     *     <li>For comparative adjectives, removes 'er' from the end.</li>
+     *     <li>For superlative adjectives, removes 'esr' from the end.</li>
+     * </ul>
+     * @param word Word for which root form will be determined.
+     * @param tag Pos tag of the word.
+     * @return Possible root form of the word.
+     */
     private String autoRoot(String word, String tag){
         if (exceptionList.containsKey(word.toLowerCase())) {
             for (ExceptionalWord exceptionalWord : exceptionList.get(word.toLowerCase())){
@@ -219,6 +269,11 @@ public class SentencePosTaggerPanel extends SentenceAnnotatorPanel {
         }
     }
 
+    /**
+     * Given the frequently used tag list for every root word, the method automatically determines the pos tags of
+     * the words in the sentence.
+     * @param priorTags Frequently used tag list.
+     */
     public void autoDetect(HashMap<String, String> priorTags){
         boolean autoFilled = false;
         for (int i = 0; i < sentence.wordCount(); i++){
@@ -242,6 +297,12 @@ public class SentencePosTaggerPanel extends SentenceAnnotatorPanel {
         this.repaint();
     }
 
+    /**
+     * Fills the JList that contains all possible pos tags.
+     * @param sentence Sentence used to populate for the current word.
+     * @param wordIndex Index of the selected word.
+     * @return The index of the selected tag, -1 if nothing selected.
+     */
     public int populateLeaf(AnnotatedSentence sentence, int wordIndex){
         int selectedIndex = -1;
         AnnotatedWord word = (AnnotatedWord) sentence.getWord(wordIndex);

@@ -29,6 +29,11 @@ public class SentencePosTaggerFrame extends SentenceAnnotatorFrame  {
     private HashMap<String, ArrayList<ExceptionalWord>> exceptionList;
     private HashSet<String> literalList;
 
+    /**
+     * Reads distinct Penn pos tags used for every word in the Penn-Treebank corpus. The file consist of multiple lines,
+     * where each line starts with the word, then following words are tags assigned to that word in Penn-Treebank
+     * corpus. The tags are separated via tab character.
+     */
     private void readPennDefaultTags(){
         ClassLoader classLoader = getClass().getClassLoader();
         Random random = new Random();
@@ -45,6 +50,10 @@ public class SentencePosTaggerFrame extends SentenceAnnotatorFrame  {
         }
     }
 
+    /**
+     * Reads distinct possible root words for this corpus to assign. Each line stores a distinct word.
+     * @param fileName File name
+     */
     private void readLiteralList(String fileName){
         literalList = new HashSet<>();
         ClassLoader classLoader = getClass().getClassLoader();
@@ -60,6 +69,11 @@ public class SentencePosTaggerFrame extends SentenceAnnotatorFrame  {
         }
     }
 
+    /**
+     * Constructor of the Pos tagger frame for annotated sentence. It reads the annotated sentence corpus and adds
+     * automatic pos tag detection button. It also reads exception word list in English, default tag set for every
+     * word, and root word list.
+     */
     public SentencePosTaggerFrame(){
         super();
         autoPosDetectionOption = new JCheckBox("Auto Part Of Speech Detection", false);
@@ -125,6 +139,11 @@ public class SentencePosTaggerFrame extends SentenceAnnotatorFrame  {
         }
     }
 
+    /**
+     * The next method takes an int count as input and moves forward along the SentencePosTaggerPanels as much as the
+     * count. If the autoPosDetectionOption is selected, it automatically assigns pos tags to words.
+     * @param count Integer count is used to move forward.
+     */
     public void next(int count){
         super.next(count);
         SentencePosTaggerPanel current;
@@ -134,6 +153,11 @@ public class SentencePosTaggerFrame extends SentenceAnnotatorFrame  {
         }
     }
 
+    /**
+     * The previous method takes an int count as input and moves backward along the SentencePosTaggerPanels as much as
+     * the count. If the autoPosDetectionOption is selected, it automatically assigns pos tags to words.
+     * @param count Integer count is used to move backward.
+     */
     public void previous(int count){
         super.previous(count);
         SentencePosTaggerPanel current;
