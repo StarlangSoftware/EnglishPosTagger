@@ -89,7 +89,7 @@ public class SentencePosTaggerFrame extends SentenceAnnotatorFrame  {
     }
 
     @Override
-    protected SentenceAnnotatorPanel generatePanel(String currentPath, String rawFileName) {
+    public SentenceAnnotatorPanel generatePanel(String currentPath, String rawFileName) {
         return new SentencePosTaggerPanel(currentPath, rawFileName, exceptionList, literalList);
     }
 
