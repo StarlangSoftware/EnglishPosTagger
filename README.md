@@ -8,10 +8,6 @@ Video Lectures
 
 [<img src=video1.jpg width="50%">](https://youtu.be/gQmc7Nhwhuk)[<img src=video2.jpg width="50%">](https://youtu.be/GHUib73MRks)
 
-Class Diagram
-============
-
-<img src="classDiagram.png">
 
 For Developers
 ============
@@ -136,6 +132,10 @@ the one that does an Hmm based training and tags the words accordingly
 
 For Contibutors
 ============
+
+### Class Diagram
+
+<img src="classDiagram.png">
 
 ### pom.xml file
 1. Standard setup for packaging is similar to:
