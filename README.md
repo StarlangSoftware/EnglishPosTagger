@@ -3,6 +3,10 @@ Pos Tagging
 
 This is a tool meant for tagging words with their part-of-speech, a grammatical category based on their function within a sentence, such as noun, adjective, verb, and so forth. 
 
+Simple Web Interface
+============
+[Link 1](http://104.247.163.162/nlptoolkit/english-pos-tagger.html) [Link 2](https://starlangsoftware.github.io/nlptoolkit-web-simple/english-pos-tagger.html)
+
 Video Lectures
 ============
 
